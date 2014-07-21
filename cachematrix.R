@@ -32,8 +32,23 @@ MakeCacheMatrix <- function(x = numeric()){
              setmatrix = setmatrix)
 }
 
-## Write a short comment describing this function
+## Function cacheSolve determine whether there is already inverse matrix
+## in previous function MakeCacheMatrix. If there is not, cacheSolve gives
+## the inverse of matrix in MakeCacheMatrix. If there is, it return the
+## message "getting cached data" and the inverse matrix.
 
-cacheSolve <- function(x, ...) {
+cacheSolve <- function(X, ...) {
         ## Return a matrix that is the inverse of 'x'
+        
+	inv <- X$getinverse()
+        if( is.null(inv)){
+                matrix <- X$getmatrix()
+                inv <- solve(matrix)
+        }
+        else{
+                message("getting cached data")
+                return(X$getinverse())
+        }
+        X$setinverse(inv)
+        inv
 }
